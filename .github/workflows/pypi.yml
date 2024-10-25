@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          path: sdist
+          path: dist
       - name: copy to wheelhouse
         run: |
           mkdir wheels
