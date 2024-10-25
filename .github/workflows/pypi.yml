@@ -54,14 +54,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
+          name: dist
           path: dist
       - name: copy to wheelhouse
         run: |
-          mkdir wheels
-          # cp -r wheelhouse/*/*.whl wheels
-          cp -r dist/* wheels
+          # cp -r wheelhouse/*/*.whl dist
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           skip-existing: true
           verbose: true
-          packages-dir: wheels/
+          packages-dir: dist/
