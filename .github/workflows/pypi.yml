@@ -20,14 +20,29 @@ jobs:
 
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel==2.21.2
-  
-     
+
       - name: build
         run: python -m cibuildwheel --output-dir wheelhouse
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
+  sdist:
+    name: Build sdist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel twine
+      - name: Build sdist
+        run: python setup.py sdist bdist_wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+
   publish:
     name: Publish wheels to pypi
     runs-on: ubuntu-latest
@@ -43,6 +58,7 @@ jobs:
         run: |
           mkdir wheels
           cp -r wheelhouse/*/*.whl wheels
+          cp -r dist/* wheels
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           skip-existing: true
