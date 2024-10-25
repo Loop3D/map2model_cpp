@@ -35,5 +35,5 @@ jobs:
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: conda-build-${{ matrix.python-version }}
+          name: conda-build-${{matrix.os}}-${{ matrix.python-version }}
           path: conda

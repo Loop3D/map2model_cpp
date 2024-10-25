@@ -9,11 +9,10 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install ."
+  script: "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
 
 requirements:
   build: 
-    - {{ compiler('cxx') }}
     - scikit-build-core
     - pybind11
     - cmake
